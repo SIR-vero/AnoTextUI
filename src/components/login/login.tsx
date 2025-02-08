@@ -7,6 +7,7 @@ import {
   Container,
   CssBaseline,
   Grid,
+  Link,
 } from "@mui/material";
 import { BackendServices } from "../../services/Backend.services";
 import { useNavigate } from "react-router-dom";
@@ -33,7 +34,7 @@ const LoginPage = () => {
       })
       .then((data) => {
         console.log("Login successful", data);
-        localStorage.setItem('authToken',`${data.accessToken}`)
+        localStorage.setItem('authToken', `${data.accessToken}`)
         navigate('/dashboard')
       })
       .catch((error) => {
@@ -116,6 +117,9 @@ const LoginPage = () => {
                 Login
               </Button>
             </Box>
+            <Typography variant="body2" sx={{ mt: 2 }}>
+              Don't have a Account yet ? <Link href="/">Sign Up</Link> now to get your AnoTexts
+            </Typography>
           </Box>
         </Container>
       </Grid>

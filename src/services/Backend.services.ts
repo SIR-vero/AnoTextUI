@@ -35,4 +35,8 @@ export class BackendServices {
         })
 
     }
+
+    static userSignUp = (username: string, password: string) => {
+        return axios.post(`${Config.basePath}/register`, {user: username, pwd: password})
+    }
 }

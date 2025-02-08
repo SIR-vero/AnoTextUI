@@ -15,20 +15,27 @@ import {
 import { grey } from '@mui/material/colors';
 import ShareIcon from '@mui/icons-material/Share';
 import { GenericServices } from '../../services/Generic.services';
+import { LogoutOutlined } from '@mui/icons-material';
 
 interface MessageListProps {
   messages: string[];
+  userId: string
 }
 
-export const MessageList: React.FC<MessageListProps> = ({ messages }) => {
+export const MessageList: React.FC<MessageListProps> = ({ messages, userId }) => {
   const [snackbarOpen, setSnackbarOpen] = useState(false);
 
   const handleShare = () => {
-    const linkToShare = `${GenericServices.getShareLink()}`; // Replace with the dynamic link if needed
+    const serverLink = GenericServices.getShareLink()
+    const linkToShare = `${serverLink}/${userId}`; // Replace with the dynamic link if needed
     navigator.clipboard.writeText(linkToShare).then(() => {
       setSnackbarOpen(true); // Open the snackbar
     });
   };
+
+  const handleLogout = () => {
+    GenericServices.handleLogout()
+  }
 
   const handleCloseSnackbar = (
     event?: React.SyntheticEvent | Event,
@@ -58,8 +65,8 @@ export const MessageList: React.FC<MessageListProps> = ({ messages }) => {
             onClick={handleShare}
             sx={{
               position: 'absolute',
-              top: 8,
-              right: 8,
+              top: 20,
+              left: 8,
               color: grey[700],
               '&:hover': {
                 color: 'primary.main',
@@ -67,6 +74,22 @@ export const MessageList: React.FC<MessageListProps> = ({ messages }) => {
             }}
           >
             <ShareIcon />
+          </IconButton>
+        </Tooltip>
+        <Tooltip title="Copy link to clipboard" arrow>
+          <IconButton
+            onClick={handleLogout}
+            sx={{
+              position: 'absolute',
+              top: 20,
+              right: 8,
+              color: grey[700],
+              '&:hover': {
+                color: 'primary.main',
+              },
+            }}
+          >
+            <LogoutOutlined />
           </IconButton>
         </Tooltip>
 
