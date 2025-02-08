@@ -7,6 +7,7 @@ interface DashboardProps {}
 export const Dashboard: React.FC<DashboardProps> = () => {
 
     const [messages, setMessages] = useState([])
+    const [userId, setUserId] = useState("")
 
     useEffect(() => {
         BackendServices.getMessages().then((response: any) => {
@@ -14,8 +15,9 @@ export const Dashboard: React.FC<DashboardProps> = () => {
             if(response.status == 200) return response.data
         }).then((data) => {
             setMessages(data.messages.map((msg: any) => msg.message_text))
+            setUserId(data?.userId)
         })
     }, [])
 
-    return <MessageList messages={messages}/>
+    return <MessageList messages={messages} userId={userId}/>
 }
